@@ -2,6 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import *
 
+from app import User
+
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=4, max=20)])
@@ -13,6 +15,11 @@ class RegisterForm(FlaskForm):
         Length(min=6, max=10),
         EqualTo('password', 'Password must match')])
     submit = SubmitField('Submit')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(account=username.data).first()
+        if user:
+            raise ValidationError('That username is taken. Please choose another.')
 
 
 class LoginForm(FlaskForm):
