@@ -14,7 +14,7 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://edensquall:gdk9313huang@edensquall.mysql.pythonanywhere-services.com/roshpit_wishlist'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://edensquall:gdk9313huang@db4free.net:3306/roshpit_wishlist'
 
 
 class DevelopmentConfig(Config):
