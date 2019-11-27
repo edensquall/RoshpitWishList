@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+{% set active_page = "edit_wish" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block header %}
+{{ super() }}
+{% endblock %}
+{% block body %}
+{% from "_formhelpers.html" import render_field %}
+<form class="form-horizontal" method="post">
+    {{ form.csrf_token }}
+    <h1 class="float-left">{{title}}</h1>
+    <div class="clearfix py-3">
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                    {{ render_field(form.item_type,class="form-control custom-select", placeholder="Choose item type") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.item_id,class="form-control custom-select", placeholder="Choose item") }}
+                </div>
+                <div id="wish_property">
+                    {% for wish_property_form in form.wish_properties %}
+                    <div class="form-group form-row">
+                        <div class="col-8 col-sm-8 col-md-8 col-lg-8">{{
+                            render_field(wish_property_form.form.property_id,class="form-control custom-select", placeholder="Property
+                            1") }}
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">{{
+                            render_field(wish_property_form.form.roll,class="form-control", placeholder=">=") }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                    {{ render_field(form.currency,class="form-control custom-select", placeholder="Choose currency") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.min_level,class="form-control", type="number", placeholder="") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.max_bid,class="form-control", type="number", placeholder="") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.max_buyout,class="form-control", type="number", placeholder="") }}
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
+            {{ form.submit(class="btn btn-lg btn-primary btn-block", type="submit", value="Save") }}
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
+            <a href="{{ url_for('wish_list.index') }}" class="btn btn-lg btn-default btn-block">Cancel</a>
+        </div>
+    </div>
+</form>
+<script>
+
+    initUI();
+
+    function initUI() {
+
+        let item_type_select = document.getElementById('item_type');
+        let item_select = document.getElementById('item_id');
+
+        item_type_select.onchange = bindItem;
+        item_select.onchange = bindProperty;
+    }
+
+    function bindItem() {
+        let item_type_select = document.getElementById('item_type');
+        let item_select = document.getElementById('item_id');
+
+        item_type = item_type_select.value;
+
+        fetch('/wish_list/item/' + item_type).then(function (response) {
+
+            response.json().then(function (data) {
+                let optionHTML = "";
+
+                for (let item of data.items) {
+                    optionHTML += `<option value="${item.id}">${item.name}</option>`;
+                }
+
+                item_select.innerHTML = optionHTML;
+                bindProperty();
+            });
+        });
+
+    }
+
+    function bindProperty() {
+        let item_select = document.getElementById('item_id');
+        let wish_property = document.getElementById('wish_property');
+        let item = item_select.value
+        
+        if (item == '') {
+            wish_property.innerHTML = '';
+            return;
+        }
+
+        fetch('/wish_list/property/' + item).then(function (response) {
+
+            response.json().then(function (data) {
+                let selectHTML = "";
+                let num_of_types_old = wish_property.childElementCount;
+                let num_of_types = Math.max(...data.properties.map(p => p.type))
+
+                for(let i = num_of_types_old ; i < num_of_types; i++) {
+                    selectHTML = `<div class="form-group form-row">
+                                    <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                                        ${i == 0 ? `<dt><label for="property_id">Property</label></dt>` : ""}
+                                        <dd>
+                                            <select class="form-control custom-select" id="wish_properties-${i}-property_id" name="wish_properties-${i}-property_id" placeholder="Property ${i+1}">
+                                            </select>
+                                        </dd>
+                                    </div>
+                                    <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                        ${i == 0 ? `<dt><label for="roll_id">Roll</label></dt>` : ""}
+                                        <dd>
+                                            <input class="form-control" id="wish_properties-${i}-roll" name="wish_properties-${i}-roll" placeholder=">=" type="text" value="">
+                                        </dd>
+                                    </div>
+                                </div>`;
+                    wish_property.innerHTML += selectHTML;
+                }
+
+                for(let i = 0; i < num_of_types_old; i++ )
+                {
+                    let property_select = document.getElementById(`wish_properties-${String(i)}-property_id`);
+                    property_select.length = 0;
+
+                    if(i >= num_of_types)
+                    {
+                        wish_property.removeChild(wish_property.lastElementChild);
+                    }
+                }
+
+                let optionHTML = "";
+                for (let property of data.properties) {
+                    optionHTML = `<option value="${property.id}">${property.name}</option>`;
+
+                    let property_select = document.getElementById(`wish_properties-${String(property.type - 1)}-property_id`);
+                    property_select.innerHTML += optionHTML;
+                }
+            });
+        });
+    }
+
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{{ url_for('static', filename='js/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" rel="stylesheet"
+          id="bootstrap-css">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" id="style-css">
+    <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js') }}"></script>
+    {% endblock %}
+</head>
+<body>
+{% block header %}
+{% include '_nav.html' %}
+{% endblock %}
+<div class="container">
+    {% include '_messages.html' %}
+    {% block body %}
+    {% endblock %}
+</div>
+</body>
+</html>

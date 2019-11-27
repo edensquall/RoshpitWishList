@@ -1,0 +1,36 @@
+{% set navigation_bar = [
+('auth.login', 'login', 'Login', False),
+('auth.register', 'register', 'Register', False),
+('notification.settings','settings', 'Settings', True),
+('auth.logout','logout','Logout', True)
+] %}
+{% set active_page = active_page|default('index') %}
+
+<nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('wish_list.index') }}">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" width="45">
+            <span class="text-uppercase font-weight-bold">Roshpit WishList</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% for href, id, caption, need_authenticated in navigation_bar if current_user.is_authenticated ==
+                need_authenticated%}
+                <li
+                        {% if id== active_page %}
+                        class="nav-item active"
+                        {% else %}
+                        class="nav-item"
+                        {% endif %}
+                >
+                    <a class="nav-link" href="{{ url_for(href|e) }}">{{ caption|e }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

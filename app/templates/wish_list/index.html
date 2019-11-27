@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% set active_page = "index" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block header %}
+{{ super() }}
+{% endblock %}
+{% block body %}
+<h1 class="float-left">{{title}}</h1>
+<div class="clearfix py-3">
+    <a href="{{ url_for('wish_list.edit_wish') }}" class="btn btn-success float-right">New Wish</a>
+</div>
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+        <th>#</th>
+        <th>Item Name</th>
+        <th>Max Bid</th>
+        <th>Max Buyout</th>
+        <th>Create Date</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for wish in wishes %}
+    <tr>
+        <td>{{ loop.index + pagination.skip }}</td>
+        <td><img src="{{ '../../static/img/item/' + wish.item.img }}" class="rounded" width="50px">
+            <a href="{{ url_for('wish_list.edit_wish', id=wish.id)}}">{{ wish.item.name }}</a></td>
+        <td>
+            <img
+                    {% if wish.currency == 1 %}
+                    src="../../static/img/mithril_shard.png"
+                    {% elif wish.currency == 2 %}
+                    src="../../static/img/arcane_crystal.png"
+                    {% endif %}
+                    style="width:20px"
+            >
+            {{ wish.max_bid or 'Any' }}
+        </td>
+        <td>
+            <img
+                    {% if wish.currency == 1 %}
+                    src="../../static/img/mithril_shard.png"
+                    {% elif wish.currency == 2 %}
+                    src="../../static/img/arcane_crystal.png"
+                    {% endif %}
+                    style="width:20px"
+            >
+            {{ wish.max_buyout or 'Any' }}
+        </td>
+        <td>{{ wish.create_date.strftime('%Y/%m/%d %H:%M:%S') }}</td>
+        <td>
+            <form action="{{ url_for('wish_list.delete_wish', id=wish.id) }}" method="post">
+                <input type="submit" value="Delete" class="btn btn-danger"
+                       onclick="return confirm('Do you really want to delete?');">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ pagination.links }}
+{% endblock %}

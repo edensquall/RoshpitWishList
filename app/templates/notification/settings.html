@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% set active_page = "settings" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block header %}
+{{ super() }}
+{% endblock %}
+{% block body %}
+{% from "_formhelpers.html" import render_field %}
+<form class="form-horizontal" method="post">
+    {{ form.csrf_token }}
+    <h1 class="float-left">{{title}}</h1>
+    <div class="clearfix py-3">
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <h4>User Info</h4>
+                <div class="form-group">
+                    {{ render_field(form.name, placeholder="Display Name", class_="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.email, placeholder="E-Mail", class_="form-control") }}
+                </div>
+                <hr class="mb-4">
+                <h4 class="d-inline-block">Notification</h4>
+                <div class="form-group d-inline-block">
+                    <div class="custom-control custom-switch">
+                        {{form.is_notification(class_="custom-control-input")}}
+                        <label class="custom-control-label" for="is_notification"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.notification_method, placeholder="Choose Notification Method",
+                    class_="form-check form-check-inline list-unstyled") }}
+                </div>
+                <div class="form-group">
+                    <dl>
+                        <dt><label>LINE</label></dt>
+                        <dd>
+                            <button type="button" class="btn btn-success" onclick="openAddLineWindow()">Add LINE
+                                Notify
+                            </button>
+                            <button type="button" class="btn btn-success" onclick="openMyLineWindow()">Manage LINE
+                                Notify
+                            </button>
+                        </dd>
+                    </dl>
+                </div>
+                <hr class="mb-4">
+            </div>
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
+            {{ form.submit(class="btn btn-lg btn-primary btn-block", type="submit", value="Save") }}
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
+            <a href="{{ url_for('wish_list.index') }}" class="btn btn-lg btn-default btn-block">Cancel</a>
+        </div>
+    </div>
+</form>
+<script>
+
+    function openAddLineWindow(){
+        const strWindowFeatures = 'toolbar=no, menubar=no, width=600, height=700, top=100, left=100';
+        window.open('https://notify-bot.line.me/oauth/authorize?response_type=code&client_id={{client_id}}&redirect_uri={{redirect_uri}}&scope=notify&state=NO_STATE', strWindowFeatures)
+    }
+
+    function openMyLineWindow(){
+        const strWindowFeatures = 'toolbar=no, menubar=no, width=600, height=700, top=100, left=100';
+        window.open('https://notify-bot.line.me/my/', strWindowFeatures)
+    }
+
+
+
+</script>
+{% endblock %}
