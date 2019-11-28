@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_injector import FlaskInjector
 from flask_login import LoginManager
@@ -5,9 +7,8 @@ from flask_login import LoginManager
 from app.models import db
 from app.module import AppModule
 
-
 app = Flask(__name__)
-app.config.from_object('config.TestingConfig')
+app.config.from_object(os.getenv('APP_SETTINGS'))
 
 db.init_app(app)
 

@@ -1,7 +1,10 @@
+import os
+
+
 class Config(object):
     SECRET_KEY = 'Roshpit'
     WTF_CSRF_ENABLED = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://edensquall:gdk9313huang@db4free.net:3306/roshpit_wishlist'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     MAIL_FROM_EMAIL = 'roshpit.wish@gmail.com'
 
     # Line Notify
@@ -14,7 +17,7 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://edensquall:gdk9313huang@db4free.net:3306/roshpit_wishlist'
+    pass
 
 
 class DevelopmentConfig(Config):
