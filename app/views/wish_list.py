@@ -12,6 +12,7 @@ from app.models.property import Property
 from app.models.wish import Wish
 from app.models.wish_property import WishProperty
 from app.services.base_wish_list_service import BaseWishListService
+from pathlib import Path
 
 wish_list = Blueprint('wish_list', __name__, url_prefix='/wish_list')
 
@@ -152,7 +153,7 @@ def download_item_image():
         r = requests.get(url, allow_redirects=True)
         if r.status_code == requests.codes.ok:
             filename = url.split('/')[-1]
-            filepath = os.path.join(os.path.abspath('app/static/img/item/'), filename)
+            filepath = Path(__file__).resolve().parents[1]/'static/img/item/'/filename
             if not os.path.isfile(filepath):
                 with open(filepath, 'wb') as f:
                     f.write(r.content)
