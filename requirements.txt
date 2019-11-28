@@ -16,6 +16,7 @@ Flask-Login==0.4.1
 flask-paginate==0.5.3
 Flask-SQLAlchemy==2.4.0
 Flask-WTF==0.14.2
+gunicorn==20.0.4
 idna==2.8
 injector==0.17.0
 itsdangerous==1.1.0
