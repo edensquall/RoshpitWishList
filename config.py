@@ -2,15 +2,14 @@ import os
 
 
 class Config(object):
-    SECRET_KEY = 'Roshpit'
+    SECRET_KEY = os.getenv('SECRET_KEY')
     WTF_CSRF_ENABLED = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
-    MAIL_FROM_EMAIL = 'roshpit.wish@gmail.com'
 
     # Line Notify
-    CLIENT_ID = 'Fn5ZFWsPuqta5HC59br7Jd'
-    CLIENT_SECRET = 'SXQZpwKgfriivZ0iQjjAgIWR0T5JfbgAR8OdocgDJgY'
-    CALLBACK_URL = 'http://127.0.0.1:5000/notification/set_notify'
+    CLIENT_ID = os.getenv('CLIENT_ID')
+    CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+    CALLBACK_URL = os.getenv('CALLBACK_URL')
 
     DEBUG = False
     TESTING = False

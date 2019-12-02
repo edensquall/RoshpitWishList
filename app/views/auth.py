@@ -24,11 +24,10 @@ def register(auth_service: BaseAuthService):
                         notification_method=1,
                         create_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         modify_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-            if auth_service.register(user):
-                flash('Thanks for registering', 'success')
-                return redirect(url_for('auth.login'))
-            else:
-                flash('Registering fail', 'danger')
+            auth_service.register(user)
+
+            flash('Thanks for registering', 'success')
+            return redirect(url_for('auth.login'))
 
     return render_template('auth/register.html', form=form, current_user=current_user)
 

@@ -14,7 +14,7 @@ class BaseAuthService:
         raise NotImplementedError
 
     @abstractmethod
-    def register(self, user: User) -> int:
+    def register(self, user: User) -> None:
         raise NotImplementedError
 
     @abstractmethod

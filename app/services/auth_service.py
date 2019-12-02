@@ -13,10 +13,9 @@ class AuthService(BaseAuthService):
         self.user_repo = user_repo
         self.uow = uow
 
-    def register(self, user: User) -> int:
+    def register(self, user: User) -> None:
         with self.uow.auto_complete():
             self.user_repo.insert(user)
-            return user.id
 
     def is_valid_login(self, user: User) -> bool:
         if self.user_repo.get_by_account_and_password(user):
