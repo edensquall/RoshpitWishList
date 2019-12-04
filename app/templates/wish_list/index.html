@@ -19,7 +19,7 @@
         <th>Item Name</th>
         <th>Max Bid</th>
         <th>Max Buyout</th>
-        <th>Create Date</th>
+        <th class="d-none d-sm-table-cell">Create Date</th>
         <th></th>
     </tr>
     </thead>
@@ -51,7 +51,7 @@
             >
             {{ wish.max_buyout or 'Any' }}
         </td>
-        <td>{{ wish.create_date.strftime('%Y/%m/%d %H:%M:%S') }}</td>
+        <td class="d-none d-sm-table-cell">{{ wish.create_date.strftime('%Y/%m/%d %H:%M:%S') }}</td>
         <td>
             <form action="{{ url_for('wish_list.delete_wish', id=wish.id) }}" method="post">
                 <input type="submit" value="Delete" class="btn btn-danger"

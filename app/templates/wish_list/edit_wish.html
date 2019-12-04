@@ -18,7 +18,8 @@
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="form-group">
-                    {{ render_field(form.item_type,class="form-control custom-select", placeholder="Choose item type") }}
+                    {{ render_field(form.item_type,class="form-control custom-select", placeholder="Choose item type")
+                    }}
                 </div>
                 <div class="form-group">
                     {{ render_field(form.item_id,class="form-control custom-select", placeholder="Choose item") }}
@@ -27,8 +28,8 @@
                     {% for wish_property_form in form.wish_properties %}
                     <div class="form-group form-row">
                         <div class="col-8 col-sm-8 col-md-8 col-lg-8">{{
-                            render_field(wish_property_form.form.property_id,class="form-control custom-select", placeholder="Property
-                            1") }}
+                            render_field(wish_property_form.form.property_id,class="form-control custom-select",
+                            placeholder="Property 1") }}
                         </div>
                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">{{
                             render_field(wish_property_form.form.roll,class="form-control", placeholder=">=") }}
@@ -52,11 +53,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
-            {{ form.submit(class="btn btn-lg btn-primary btn-block", type="submit", value="Save") }}
-        </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
-            <a href="{{ url_for('wish_list.index') }}" class="btn btn-lg btn-default btn-block">Cancel</a>
+        <div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right py-3">
+                {{ form.submit(class="btn btn-lg btn-primary btn-block", type="submit", value="Save") }}
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right py-3">
+                <a href="{{ url_for('wish_list.index') }}" class="btn btn-lg btn-default btn-block">Cancel</a>
+            </div>
         </div>
     </div>
 </form>
@@ -152,6 +155,8 @@
             });
         });
     }
+
+
 
 </script>
 {% endblock %}

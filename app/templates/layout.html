@@ -3,6 +3,7 @@
 <head>
     {% block head %}
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <title>{% block title %}{% endblock %}</title>
     <link href="{{ url_for('static', filename='js/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" rel="stylesheet"
           id="bootstrap-css">
@@ -15,7 +16,7 @@
 {% block header %}
 {% include '_nav.html' %}
 {% endblock %}
-<div class="container">
+<div class="container my-3">
     {% include '_messages.html' %}
     {% block body %}
     {% endblock %}

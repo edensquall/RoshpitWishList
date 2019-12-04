@@ -24,7 +24,8 @@
                 <div class="form-group">
                     {{ render_field(form.email, placeholder="E-Mail", class_="form-control") }}
                 </div>
-                <hr class="mb-4">
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                 <h4 class="d-inline-block">Notification</h4>
                 <div class="form-group d-inline-block">
                     <div class="custom-control custom-switch">
@@ -40,28 +41,26 @@
                     <dl>
                         <dt><label>LINE</label></dt>
                         <dd>
-                            <button type="button" class="btn btn-success" onclick="openAddLineWindow()">Add LINE
-                                Notify
+                            <button type="button" class="btn btn-success" onclick="openAddLineWindow()">Add Notify
                             </button>
-                            <button type="button" class="btn btn-success" onclick="openMyLineWindow()">Manage LINE
-                                Notify
+                            <button type="button" class="btn btn-success" onclick="openMyLineWindow()">Manage Notify
                             </button>
                         </dd>
                     </dl>
                 </div>
-                <hr class="mb-4">
             </div>
         </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
-            {{ form.submit(class="btn btn-lg btn-primary btn-block", type="submit", value="Save") }}
-        </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right">
-            <a href="{{ url_for('wish_list.index') }}" class="btn btn-lg btn-default btn-block">Cancel</a>
+        <div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right py-3">
+                {{ form.submit(class="btn btn-lg btn-primary btn-block", type="submit", value="Save") }}
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3 float-right py-3">
+                <a href="{{ url_for('wish_list.index') }}" class="btn btn-lg btn-default btn-block">Cancel</a>
+            </div>
         </div>
     </div>
 </form>
 <script>
-
     function openAddLineWindow(){
         const strWindowFeatures = 'toolbar=no, menubar=no, width=600, height=700, top=100, left=100';
         window.open('https://notify-bot.line.me/oauth/authorize?response_type=code&client_id={{client_id}}&redirect_uri={{redirect_uri}}&scope=notify&state=NO_STATE', strWindowFeatures)
@@ -71,8 +70,6 @@
         const strWindowFeatures = 'toolbar=no, menubar=no, width=600, height=700, top=100, left=100';
         window.open('https://notify-bot.line.me/my/', strWindowFeatures)
     }
-
-
 
 </script>
 {% endblock %}
