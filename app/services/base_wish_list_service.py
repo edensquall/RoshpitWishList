@@ -24,32 +24,81 @@ class BaseWishListService:
 
     @abstractmethod
     def get_wish_by_id(self, wish: Wish) -> Wish:
+        """
+        取得符合此id的wish資料
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: 符合此id的wish資料
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def add_new_wish(self, wish: Wish) -> None:
+        """
+        新增wish的資料
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: None
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def get_user_wishes(self, wish: Wish) -> List[Wish]:
+        """
+        取得某個使用者的所有wish
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: 某個使用者的所有wish
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def delete_wish_from_list(self, wish_: Wish) -> None:
+        """
+        刪除wish的資料
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: None
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def get_all_item_types(self) -> List[ItemType]:
+        """
+        取得所有道具資料
+        Returns: 所有道具資料
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def get_all_these_types_of_items(self, item: Item) -> List[Item]:
-        raise NotImplementedError
+        """
+        取得所有該類型的道具
+        Args:
+            item: 傳遞道具參數
 
-    @abstractmethod
-    def get_property_type_count_of_this_item(self) -> int:
+        Returns: 所有該類型的道具
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def get_all_the_property_of_this_item(self, property: Property) -> List[Property]:
+        """
+        取得某個道具的屬性
+        Args:
+            property: 傳遞屬性參數
+
+        Returns: 某個道具的屬性
+
+        """
         raise NotImplementedError

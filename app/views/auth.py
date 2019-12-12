@@ -1,4 +1,5 @@
 import datetime
+from typing import Any
 
 from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask_login import login_user, current_user, login_required, logout_user
@@ -11,7 +12,15 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 
 @auth.route('/register', methods=['POST', 'GET'])
-def register(auth_service: BaseAuthService):
+def register(auth_service: BaseAuthService) -> Any:
+    """
+    註冊
+    Args:
+        auth_service: 認證相關的商業邏輯
+
+    Returns: Any
+
+    """
     form = RegisterForm()
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -33,7 +42,15 @@ def register(auth_service: BaseAuthService):
 
 
 @auth.route('/login', methods=['GET', 'POST'])
-def login(auth_service: BaseAuthService):
+def login(auth_service: BaseAuthService) -> Any:
+    """
+    登入
+    Args:
+        auth_service: 認證相關的商業邏輯
+
+    Returns: Any
+
+    """
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -54,7 +71,12 @@ def login(auth_service: BaseAuthService):
 
 @auth.route('/logout')
 @login_required
-def logout():
+def logout() -> Any:
+    """
+    登出
+    Returns: Any
+
+    """
     logout_user()
     flash('Bye Bye', 'success')
     return redirect(url_for('auth.login'))

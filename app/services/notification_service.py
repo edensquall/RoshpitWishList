@@ -17,12 +17,36 @@ class NotificationService(BaseNotificationService):
         self.uow = uow
 
     def add_new_notify(self, notify: Notify) -> None:
+        """
+        新增通知
+        Args:
+            notify: 傳遞通知參數
+
+        Returns: None
+
+        """
         with self.uow.auto_complete():
             self.notify_repo.insert(notify)
 
     def get_user_settings(self, user: User) -> User:
+        """
+        取得使用者設定
+        Args:
+            user: 傳遞使用者參數
+
+        Returns: 使用者設定
+
+        """
         return self.user_repo.get_by_id(user)
 
     def edit_user_settings(self, user: User) -> None:
+        """
+        修改使用者設定
+        Args:
+            user: 傳遞使用者參數
+
+        Returns: None
+
+        """
         with self.uow.auto_complete():
             self.user_repo.insert(user)

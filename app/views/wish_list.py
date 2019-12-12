@@ -1,6 +1,7 @@
 import datetime
 import os
 from pathlib import Path
+from typing import Any
 
 import requests
 from flask import render_template, request, flash, redirect, url_for, jsonify, Blueprint
@@ -21,7 +22,15 @@ wish_list = Blueprint('wish_list', __name__, url_prefix='/wish_list')
 @app.route('/', methods=['GET', 'POST'])
 @wish_list.route('/index', methods=['GET', 'POST'])
 @login_required
-def index(wish_list_service: BaseWishListService):
+def index(wish_list_service: BaseWishListService) -> Any:
+    """
+    Wish List主頁，列出使用者所有的Wish
+    Args:
+        wish_list_service: WishList相關的商業邏輯
+
+    Returns: Any
+
+    """
     wishes = wish_list_service.get_user_wishes(Wish(user_id=current_user.id))
 
     page, per_page, start = get_page_args(page_parameter='page', per_page_parameter='per_page')
@@ -35,14 +44,34 @@ def index(wish_list_service: BaseWishListService):
 
 @wish_list.route('/delete_wish/', defaults={'id': None}, methods=['POST'])
 @wish_list.route('/delete_wish/<int:id>', methods=['POST'])
-def delete_wish(id, wish_list_service: BaseWishListService):
+@login_required
+def delete_wish(id, wish_list_service: BaseWishListService) -> Any:
+    """
+    刪除某個Wish
+    Args:
+        id: Wish id
+        wish_list_service: WishList相關的商業邏輯
+
+    Returns: Any
+
+    """
     wish_list_service.delete_wish_from_list(Wish(id=id))
     return redirect(url_for('wish_list.index'))
 
 
 @wish_list.route('/new_wish/', defaults={'id': None}, methods=['GET', 'POST'])
 @wish_list.route('/edit_wish/<id>', methods=['GET', 'POST'])
-def edit_wish(id, wish_list_service: BaseWishListService):
+@login_required
+def edit_wish(id, wish_list_service: BaseWishListService) -> Any:
+    """
+    新增/修改某個Wish
+    Args:
+        id: Wish id
+        wish_list_service: WishList相關的商業邏輯
+
+    Returns: Any
+
+    """
     obj = wish_list_service.get_wish_by_id(Wish(id=id))
     if obj:
         obj.item_type = obj.item.type
@@ -119,7 +148,17 @@ def edit_wish(id, wish_list_service: BaseWishListService):
 
 @wish_list.route('/item/', defaults={'type': None}, methods=['POST'])
 @wish_list.route('/item/<type>')
-def item(type, wish_list_service: BaseWishListService):
+@login_required
+def item(type, wish_list_service: BaseWishListService) -> Any:
+    """
+    取得所有某個類型的道具
+    Args:
+        type: 道具類型
+        wish_list_service: WishList相關的商業邏輯
+
+    Returns: Any
+
+    """
     items = wish_list_service.get_all_these_types_of_items(Item(type=type))
     items_array = [{'id': item.id, 'name': item.name} for item in items]
     items_array.insert(0, {'id': '', 'name': 'Choose'})
@@ -129,7 +168,17 @@ def item(type, wish_list_service: BaseWishListService):
 
 @wish_list.route('/property/', defaults={'item_id': None}, methods=['POST'])
 @wish_list.route('/property/<item_id>')
-def property(item_id, wish_list_service: BaseWishListService):
+@login_required
+def property(item_id, wish_list_service: BaseWishListService) -> Any:
+    """
+    取得某個道具的屬性
+    Args:
+        item_id: 道具id
+        wish_list_service: WishList相關的商業邏輯
+
+    Returns: Any
+
+    """
     properties = wish_list_service.get_all_the_property_of_this_item(Property(item_id=item_id))
 
     property_array = []
@@ -147,7 +196,12 @@ def property(item_id, wish_list_service: BaseWishListService):
 
 
 @wish_list.route('/download_item_image', methods=['POST'])
-def download_item_image():
+def download_item_image() -> Any:
+    """
+    下載道具圖片
+    Returns: Any
+
+    """
     data = request.get_json()
     url = data.get('url')
     if url:

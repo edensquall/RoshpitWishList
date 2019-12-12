@@ -29,28 +29,78 @@ class WishListService(BaseWishListService):
         self.uow = uow
 
     def get_wish_by_id(self, wish: Wish) -> Wish:
+        """
+        取得符合此id的wish資料
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: 符合此id的wish資料
+
+        """
         return self.wish_repo.get_by_id(wish)
 
     def add_new_wish(self, wish: Wish) -> None:
+        """
+        新增wish的資料
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: None
+
+        """
         with self.uow.auto_complete():
             self.wish_repo.insert(wish)
 
     def get_user_wishes(self, wish: Wish) -> List[Wish]:
+        """
+        取得某個使用者的所有wish
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: 某個使用者的所有wish
+
+        """
         return self.wish_repo.get_by_user_id(wish)
 
     def delete_wish_from_list(self, wish: Wish) -> None:
+        """
+        刪除wish的資料
+        Args:
+            wish: 傳遞wish參數
+
+        Returns: None
+
+        """
         with self.uow.auto_complete():
             self.wish_property_repo.delete_by_wish_id(WishProperty(wish_id=wish.id))
             self.wish_repo.delete(wish)
 
     def get_all_item_types(self) -> List[ItemType]:
+        """
+        取得所有道具資料
+        Returns: 所有道具資料
+
+        """
         return self.item_type_repo.get_all(ItemType)
 
     def get_all_these_types_of_items(self, item: Item) -> List[Item]:
+        """
+        取得所有該類型的道具
+        Args:
+            item: 傳遞道具參數
+
+        Returns: 所有該類型的道具
+
+        """
         return self.item_repo.get_by_item_type(item)
 
-    def get_property_type_count_of_this_item(self) -> int:
-        return self.property_repo.get_property_type_count()
-
     def get_all_the_property_of_this_item(self, property: Property) -> List[Property]:
+        """
+        取得某個道具的屬性
+        Args:
+            property: 傳遞屬性參數
+
+        Returns: 某個道具的屬性
+
+        """
         return self.item_repo.get_item_property(property)

@@ -14,13 +14,37 @@ class AuthService(BaseAuthService):
         self.uow = uow
 
     def register(self, user: User) -> None:
+        """
+        註冊使用者
+        Args:
+            user: 傳遞使用者參數
+
+        Returns: None
+
+        """
         with self.uow.auto_complete():
             self.user_repo.insert(user)
 
     def is_valid_login(self, user: User) -> bool:
+        """
+        檢查登入是否正確
+        Args:
+            user: 傳遞使用者參數
+
+        Returns: 登入是否正確
+
+        """
         if self.user_repo.get_by_account_and_password(user):
             return True
         return False
 
     def get_user_by_account(self, user: User) -> User:
+        """
+        取得某個帳號的使用者
+        Args:
+            user: 傳遞使用者參數
+
+        Returns: 某個帳號的使用者
+
+        """
         return self.user_repo.get_by_account(user)

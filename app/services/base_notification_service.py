@@ -17,12 +17,36 @@ class BaseNotificationService:
 
     @abstractmethod
     def add_new_notify(self, notify: Notify) -> None:
+        """
+        新增通知
+        Args:
+            notify: 傳遞通知參數
+
+        Returns: None
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def get_user_settings(self, user: User) -> User:
+        """
+        取得使用者設定
+        Args:
+            user: 傳遞使用者參數
+
+        Returns: 使用者設定
+
+        """
         raise NotImplementedError
 
     @abstractmethod
     def edit_user_settings(self, user: User) -> None:
+        """
+        修改使用者設定
+        Args:
+            user: 傳遞使用者參數
+
+        Returns: None
+
+        """
         raise NotImplementedError

@@ -1,6 +1,7 @@
 import datetime
 import json
 import urllib
+from typing import Any
 from urllib.request import Request
 
 from flask import render_template, Blueprint, request, current_app, flash, url_for
@@ -17,7 +18,15 @@ notification = Blueprint('notification', __name__, url_prefix='/notification')
 
 @notification.route('/settings', methods=['GET', 'POST'])
 @login_required
-def settings(notification_service: BaseNotificationService):
+def settings(notification_service: BaseNotificationService) -> Any:
+    """
+    設定使用者資料與通知
+    Args:
+        notification_service: 通知相關的商業邏輯
+
+    Returns: Any
+
+    """
     obj = notification_service.get_user_settings(User(id=current_user.id))
 
     form = SettingsForm(obj=obj)
@@ -44,10 +53,19 @@ def settings(notification_service: BaseNotificationService):
 
 
 @notification.route('/set_notify', methods=['GET', 'POST'])
-def set_notify(notification_service: BaseNotificationService):
+def set_notify(notification_service: BaseNotificationService) -> Any:
+    """
+    設定line通知，Post資料到line notify取回token並儲存到資料庫
+    Args:
+        notification_service: 通知相關的商業邏輯
+
+    Returns: Any
+
+    """
     code = request.args.get('code')
     state = request.args.get('state')
 
+    # POST資料到line notify取回token
     url = 'https://notify-bot.line.me/oauth/token'
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     data = urllib.parse.urlencode({'grant_type': 'authorization_code',
@@ -61,6 +79,7 @@ def set_notify(notification_service: BaseNotificationService):
         result = json.loads(response.read().decode('utf-8'))
 
         if result and result['status'] == 200:
+            # 儲存token到資料庫
             notification_service.add_new_notify(Notify(
                 id=result['access_token'],
                 user_id=current_user.id,
