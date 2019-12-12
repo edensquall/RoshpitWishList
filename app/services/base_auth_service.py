@@ -10,7 +10,7 @@ from app.unit_of_works.base_uow import BaseUOW
 class BaseAuthService:
 
     @inject
-    def __init__(self, repo: BaseUserRepo, uow: BaseUOW):
+    def __init__(self, user_repo: BaseUserRepo, uow: BaseUOW):
         raise NotImplementedError
 
     @abstractmethod

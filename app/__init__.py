@@ -1,11 +1,14 @@
 import os
 
+from dotenv import load_dotenv
 from flask import Flask
 from flask_injector import FlaskInjector
 from flask_login import LoginManager
 
 from app.models import db
 from app.module import AppModule
+
+load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(os.getenv('APP_SETTINGS'))

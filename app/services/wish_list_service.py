@@ -16,10 +16,6 @@ from app.services.base_wish_list_service import BaseWishListService
 from app.unit_of_works.base_uow import BaseUOW
 
 
-class ViewPropertyMapper(object):
-    pass
-
-
 class WishListService(BaseWishListService):
 
     @inject

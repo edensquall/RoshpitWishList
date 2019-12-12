@@ -26,4 +26,3 @@ class NotificationService(BaseNotificationService):
     def edit_user_settings(self, user: User) -> None:
         with self.uow.auto_complete():
             self.user_repo.insert(user)
-
