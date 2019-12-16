@@ -106,9 +106,11 @@ def edit_wish(id, wish_list_service: BaseWishListService) -> Any:
         for i in range(num_of_types):
             if len(form.wish_properties.entries) <= i or len(form.wish_properties.entries) == 0:
                 form.wish_properties.append_entry()
-            form.wish_properties.entries[i].form.property_id.choices.insert(0, ('', 'Any'))
+            form.wish_properties.entries[i].form.property_id.choices.insert(0, ('', 'Any', {'tip': ''}))
 
-        [form.wish_properties.entries[property.type - 1].form.property_id.choices.append((property.id, property.name))
+        [form.wish_properties.entries[property.type - 1].form.property_id.choices.append((property.id, property.name, {
+            'tip': '★' if property.is_ability else (f'{str(property.min)} - {str(property.max)}'
+                                                    if (property.min and property.max) else '>=')}))
          for property in properties]
 
         form.wish_properties.entries[0].form.property_id.label.text = 'Property'
@@ -186,11 +188,13 @@ def property(item_id, wish_list_service: BaseWishListService) -> Any:
     if properties:
         num_of_types = max(property.type for property in properties)
 
-        [property_array.append({'id': '', 'name': 'Any', 'min': '', 'max': '', 'type': i + 1}) for i in
-         range(num_of_types)]
+        [property_array.append({'id': '', 'name': 'Any', 'type': i + 1, 'tip': '>='}) for
+         i in range(num_of_types)]
 
-        [property_array.append({'id': property.id, 'name': property.name, 'min': property.min, 'max': property.max,
-                                'type': property.type}) for property in properties]
+        [property_array.append({'id': property.id, 'name': property.name, 'type': property.type,
+                                'tip': '★' if property.is_ability else (f'{str(property.min)} - {str(property.max)}'
+                                                                        if (property.min and property.max) else '>=')})
+         for property in properties]
 
     return jsonify({'properties': property_array})
 

@@ -74,6 +74,16 @@
 
         item_type_select.onchange = bindItem;
         item_select.onchange = bindProperty;
+
+        let num_of_types = wish_property.childElementCount;
+
+        for(let i = 0; i < num_of_types; i++ )
+        {
+            let property_select = document.getElementById(`wish_properties-${String(i)}-property_id`);
+
+            property_select.onchange = bindRoll;
+            property_select.onchange();
+        }
     }
 
     function bindItem() {
@@ -147,13 +157,30 @@
 
                 let optionHTML = "";
                 for (let property of data.properties) {
-                    optionHTML = `<option value="${property.id}">${property.name}</option>`;
+                    optionHTML = `<option value="${property.id}" tip="${property.tip}">${property.name}</option>`;
 
                     let property_select = document.getElementById(`wish_properties-${String(property.type - 1)}-property_id`);
                     property_select.innerHTML += optionHTML;
+                    property_select.onchange = bindRoll;
+                    property_select.onchange();
                 }
             });
         });
+    }
+
+    function bindRoll() {
+        let property_select = this
+        let property_roll = document.getElementById(property_select.id.replace('property_id','roll'))
+        let tip = property_select[property_select.selectedIndex].getAttribute('tip')
+        property_roll.setAttribute('placeholder',tip)
+        if(tip == "★") {
+            property_roll.setAttribute('readonly','')
+            property_roll.setAttribute('class', 'form-control-plaintext')
+        } else {
+            property_roll.removeAttribute('readonly')
+            property_roll.setAttribute('class', 'custom-select')
+        }
+        
     }
 
 

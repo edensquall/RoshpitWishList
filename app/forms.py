@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Selec
 from wtforms.validators import InputRequired, Length, Email, EqualTo, ValidationError
 
 from app import User
+from app.field import SelectHasAttributesOptionField
 
 
 class RegisterForm(FlaskForm):
@@ -34,7 +35,7 @@ class WishPropertyForm(FlaskForm):
     class Meta:
         csrf = False
 
-    property_id = SelectField('', coerce=str, choices=[], render_kw={'class': 'custom-select'})
+    property_id = SelectHasAttributesOptionField('', coerce=str, choices=[], render_kw={'class': 'custom-select'})
     roll = StringField('', filters=[lambda x: x or None])
 
 
