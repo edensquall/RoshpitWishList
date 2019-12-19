@@ -27,13 +27,13 @@
     {% for wish in wishes %}
     <tr>
         <td>{{ loop.index + pagination.skip }}</td>
-        <td><img src="{{ '../../static/img/item/' + wish.item.img }}" class="rounded" width="50px">
+        <td><img src="{{ img_item_dir_url + (wish.item.img or '')}}" class="rounded" width="50px">
             <a href="{{ url_for('wish_list.edit_wish', id=wish.id)}}">{{ wish.item.name }}</a></td>
         <td>
             <img
-                    {% if wish.currency == 1 %}
+                    {% if wish.currency== 1 %}
                     src="../../static/img/mithril_shard.png"
-                    {% elif wish.currency == 2 %}
+                    {% elif wish.currency== 2 %}
                     src="../../static/img/arcane_crystal.png"
                     {% endif %}
                     style="width:20px"
@@ -42,9 +42,9 @@
         </td>
         <td>
             <img
-                    {% if wish.currency == 1 %}
+                    {% if wish.currency== 1 %}
                     src="../../static/img/mithril_shard.png"
-                    {% elif wish.currency == 2 %}
+                    {% elif wish.currency== 2 %}
                     src="../../static/img/arcane_crystal.png"
                     {% endif %}
                     style="width:20px"

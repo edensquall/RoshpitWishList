@@ -11,6 +11,9 @@ class Config(object):
     CLIENT_SECRET = os.getenv('CLIENT_SECRET')
     CALLBACK_URL = os.getenv('CALLBACK_URL')
 
+    # 道具圖片網址
+    IMG_DIR_URL = os.getenv('IMG_DIR_URL')
+
     DEBUG = False
     TESTING = False
 

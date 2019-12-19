@@ -1,10 +1,7 @@
 import datetime
-import os
-from pathlib import Path
 from typing import Any
 
-import requests
-from flask import render_template, request, flash, redirect, url_for, jsonify, Blueprint
+from flask import render_template, current_app, request, flash, redirect, url_for, jsonify, Blueprint
 from flask_login import login_required, current_user
 from flask_paginate import Pagination, get_page_args
 
@@ -37,9 +34,11 @@ def index(wish_list_service: BaseWishListService) -> Any:
     pagination = Pagination(page=page, per_page=per_page, total=len(wishes), bs_version=4, alignment='center',
                             record_name='wishes')
 
+    img_item_dir_url = current_app.config['IMG_DIR_URL'] or ''
+
     return render_template('wish_list/index.html', title='Wish List', current_user=current_user,
                            wishes=wishes[start:start + per_page],
-                           pagination=pagination)
+                           pagination=pagination, img_item_dir_url=img_item_dir_url)
 
 
 @wish_list.route('/delete_wish/', defaults={'id': None}, methods=['POST'])
@@ -197,24 +196,3 @@ def property(item_id, wish_list_service: BaseWishListService) -> Any:
          for property in properties]
 
     return jsonify({'properties': property_array})
-
-
-@wish_list.route('/download_item_image', methods=['POST'])
-def download_item_image() -> Any:
-    """
-    下載道具圖片
-    Returns: Any
-
-    """
-    data = request.get_json()
-    url = data.get('url')
-    if url:
-        r = requests.get(url, allow_redirects=True)
-        if r.status_code == requests.codes.ok:
-            filename = url.split('/')[-1]
-            filepath = Path(__file__).resolve().parents[1] / 'static/img/item/' / filename
-            if not os.path.isfile(filepath):
-                with open(filepath, 'wb') as f:
-                    f.write(r.content)
-            return jsonify({'Status': 'Success'})
-    return jsonify({'Status': 'Fail'})
