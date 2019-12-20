@@ -13,4 +13,4 @@ class Wish(db.Model):
     create_date = db.Column(db.DateTime)
     modify_date = db.Column(db.DateTime)
     item = db.relationship('Item', backref='wish')
-    wish_properties = db.relationship('WishProperty', backref='wish')
+    wish_properties = db.relationship('WishProperty', backref='wish', cascade="all, delete-orphan")

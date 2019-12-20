@@ -134,6 +134,7 @@ def edit_wish(id, wish_list_service: BaseWishListService) -> Any:
                 wish_property = WishProperty(
                     roll=property_form['roll'],
                     property_id=property_form['property_id'],
+                    wish_id=id,
                     create_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                     modify_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
                 wish.wish_properties.append(wish_property)
