@@ -32,7 +32,7 @@
                             placeholder="Property 1") }}
                         </div>
                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">{{
-                            render_field(wish_property_form.form.roll,class="form-control", placeholder=">=") }}
+                            render_field(wish_property_form.form.roll,class="form-control", placeholder="") }}
                         </div>
                     </div>
                     {% endfor %}
@@ -137,7 +137,7 @@
                                     <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                         ${i == 0 ? `<dt><label for="roll_id">Roll</label></dt>` : ""}
                                         <dd>
-                                            <input class="form-control" id="wish_properties-${i}-roll" name="wish_properties-${i}-roll" placeholder=">=" type="text" value="">
+                                            <input class="form-control" id="wish_properties-${i}-roll" name="wish_properties-${i}-roll" placeholder="" type="text" value="">
                                         </dd>
                                     </div>
                                 </div>`;
@@ -171,18 +171,19 @@
     function bindRoll() {
         let property_select = this
         let property_roll = document.getElementById(property_select.id.replace('property_id','roll'))
+        let value = property_select[property_select.selectedIndex].value
         let tip = property_select[property_select.selectedIndex].getAttribute('tip')
         property_roll.setAttribute('placeholder',tip)
-        if(tip == "★") {
+        
+        if(value == "" || tip == "★") {
+            property_roll.value = ''
             property_roll.setAttribute('readonly','')
             property_roll.setAttribute('class', 'form-control-plaintext')
         } else {
             property_roll.removeAttribute('readonly')
             property_roll.setAttribute('class', 'custom-select')
         }
-        
     }
-
 
 
 </script>

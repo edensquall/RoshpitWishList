@@ -4,6 +4,7 @@ from app.models import db
 class WishProperty(db.Model):
     __tablename__ = 'wish_property'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    type = db.Column(db.Integer)
     roll = db.Column(db.Integer)
     property_id = db.Column(db.String(90), db.ForeignKey('property.id'))
     wish_id = db.Column(db.Integer, db.ForeignKey('wish.id'))

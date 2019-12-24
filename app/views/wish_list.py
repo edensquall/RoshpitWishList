@@ -75,15 +75,6 @@ def edit_wish(id, wish_list_service: BaseWishListService) -> Any:
     if obj:
         obj.item_type = obj.item.type
 
-        if obj.item and obj.item.properties:
-
-            num_of_types = max(property.type for property in obj.item.properties)
-
-            current_types = [wish_property.property.type for wish_property in obj.wish_properties]
-            for i in range(num_of_types):
-                if i + 1 not in current_types:
-                    obj.wish_properties.insert(i, WishProperty())
-
     form = WishForm(obj=obj)
 
     # bind item type
@@ -109,7 +100,7 @@ def edit_wish(id, wish_list_service: BaseWishListService) -> Any:
 
         [form.wish_properties.entries[property.type - 1].form.property_id.choices.append((property.id, property.name, {
             'tip': '★' if property.is_ability else (f'{str(property.min)} - {str(property.max)}'
-                                                    if (property.min and property.max) else '>=')}))
+                                                    if (property.min and property.max) else '')}))
          for property in properties]
 
         form.wish_properties.entries[0].form.property_id.label.text = 'Property'
@@ -129,15 +120,15 @@ def edit_wish(id, wish_list_service: BaseWishListService) -> Any:
             modify_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         )
 
-        for property_form in form.wish_properties.data:
-            if property_form['property_id'] != '':
-                wish_property = WishProperty(
-                    roll=property_form['roll'],
-                    property_id=property_form['property_id'],
-                    wish_id=id,
-                    create_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                    modify_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-                wish.wish_properties.append(wish_property)
+        for i, property_form in enumerate(form.wish_properties.data, start=1):
+            wish_property = WishProperty(
+                type=i,
+                roll=property_form['roll'],
+                property_id=property_form['property_id'] or None,
+                wish_id=id,
+                create_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                modify_date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            wish.wish_properties.append(wish_property)
 
         wish_list_service.add_new_wish(wish)
 
@@ -188,12 +179,12 @@ def property(item_id, wish_list_service: BaseWishListService) -> Any:
     if properties:
         num_of_types = max(property.type for property in properties)
 
-        [property_array.append({'id': '', 'name': 'Any', 'type': i + 1, 'tip': '>='}) for
+        [property_array.append({'id': '', 'name': 'Any', 'type': i + 1, 'tip': ''}) for
          i in range(num_of_types)]
 
         [property_array.append({'id': property.id, 'name': property.name, 'type': property.type,
                                 'tip': '★' if property.is_ability else (f'{str(property.min)} - {str(property.max)}'
-                                                                        if (property.min and property.max) else '>=')})
+                                                                        if (property.min and property.max) else '')})
          for property in properties]
 
     return jsonify({'properties': property_array})
