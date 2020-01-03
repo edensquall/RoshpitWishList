@@ -25,21 +25,21 @@ RoshpitWishList需要搭配[RoshpitCrawler](https://github.com/edensquall/Roshpi
 .
 ├── app
 │   ├── __init__.py             app的初始化
-│   ├── field.py				自訂的WTForms Field
-│   ├── forms.py				WTForms表單
-│   ├── models					各種Model (MVC:Model)
-│   ├── module.py				提供注入物件
-│   ├── repositories			各種Repository			
-│   ├── services				各種Application Service
-│   ├── static					靜態檔案css,img,js
-│   ├── templates				各種html頁面模板 (MVC:View)
-│   ├── unit_of_works			各種Unit of Work
-│   └── views					各種View (MVC:Controller)
-├── .env						各種環境變數 (須自行建立)
-├── config.py					應用程式設定
-├── requirements.txt			記錄所有需要的套件
-├── run.py						程式的進入點
-└── venv						虛擬環境 (須自行建立)
+│   ├── field.py                自訂的WTForms Field
+│   ├── forms.py                WTForms表單
+│   ├── models                  各種Model (MVC:Model)
+│   ├── module.py               提供注入物件
+│   ├── repositories            各種Repository			
+│   ├── services                各種Application Service
+│   ├── static                  靜態檔案css,img,js
+│   ├── templates               各種html頁面模板 (MVC:View)
+│   ├── unit_of_works           各種Unit of Work
+│   └── views                   各種View (MVC:Controller)
+├── .env                        各種環境變數 (須自行建立)
+├── config.py                   應用程式設定
+├── requirements.txt            記錄所有需要的套件
+├── run.py                      程式的進入點
+└── venv                        虛擬環境 (須自行建立)
 ```
 
 ## 需求
