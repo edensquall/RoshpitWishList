@@ -36,9 +36,7 @@ RoshpitWishList需要搭配[RoshpitCrawler](https://github.com/edensquall/Roshpi
 │   ├── unit_of_works			各種Unit of Work
 │   └── views							各種View (MVC:Controller)
 ├── .env									各種環境變數 (須自行建立)
-├── app.yaml							Google App Engine的Python應用程式設定
 ├── config.py							應用程式設定
-├── deploy.yaml						Google App Engine的建構設定
 ├── requirements.txt			記錄所有需要的套件
 ├── run.py								程式的進入點
 └── venv									虛擬環境 (須自行建立)
