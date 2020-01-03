@@ -1,6 +1,6 @@
 # RoshpitWishList
 
-RoshpitWishList是一個用來追蹤[Roshpit Champions](https://www.roshpit.ca)拍賣品的網站。使用者在網站上設定想要購買的道具屬性，當Roshpit Champions的拍賣場出現符合的拍賣品時，將會透過Line或者是E-mail做通知，通知的內容包含拍賣品詳細的數值與拍賣品連結，透過該連結即可直接前往拍賣場購買。
+RoshpitWishList是一個用來追蹤[Roshpit Champions](https://www.roshpit.ca)拍賣品的Web應用程式。使用者在頁面上設定想要購買的道具屬性，當Roshpit Champions的拍賣場出現符合的拍賣品時，將會透過Line或者是E-mail做通知，通知的內容包含拍賣品詳細的數值與拍賣品連結，透過該連結即可直接前往拍賣場購買。
 
 RoshpitWishList需要搭配[RoshpitCrawler](https://github.com/edensquall/RoshpitCrawler)才能發揮完整的功能，RoshpitCrawler負責爬取Roshpit Champions道具、拍賣品資料與發送通知。
 
