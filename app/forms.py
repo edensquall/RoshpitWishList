@@ -44,7 +44,8 @@ class WishForm(FlaskForm):
     item_id = SelectField('Item', coerce=str, choices=[], validators=[validators.required()])
     wish_properties = FieldList(FormField(WishPropertyForm))
     currency = SelectField('Currency', coerce=int,
-                           choices=[(0, 'Choose'), (1, 'Mithril Shards'), (2, 'Arcane Crystals')],
+                           choices=[(0, 'Choose'), (1, 'Mithril Shards'), (2, 'Arcane Crystals'),
+                                    (3, 'Prismatic Gemstones')],
                            validators=[validators.required()])
     min_level = IntegerField('Min Level', default=0)
     max_bid = IntegerField('Max Bid', default=0)
